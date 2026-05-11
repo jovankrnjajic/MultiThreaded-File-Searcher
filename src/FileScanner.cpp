@@ -1,11 +1,15 @@
 #include "FileScanner.hpp"
 #include <filesystem>
 #include <fstream>
-#include <iostream>
+#include <set>
+#include <algorithm>
 
 namespace fs = std::filesystem;
 
 bool find_files(const std::string& target_path, std::vector<std::string>& file_list) {
+    // set of extensions to skip
+    std::set<std::string> skip_extensions = { ".pdf", ".exe", ".jpg", ".png", ".zip", ".dll" };
+
     try 
     {
         if (fs::exists(target_path) && fs::is_directory(target_path)) 
@@ -14,7 +18,12 @@ bool find_files(const std::string& target_path, std::vector<std::string>& file_l
             {
                 if (fs::is_regular_file(entry.path())) 
                 {
-                    file_list.push_back(entry.path().string());
+                    std::string ext = entry.path().extension().string();
+                    std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+
+                    if (skip_extensions.find(ext) == skip_extensions.end()) {
+                        file_list.push_back(entry.path().string());
+                    }
                 }
             }
             return true;

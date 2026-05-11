@@ -2,6 +2,7 @@
 #include "FileScanner.hpp"
 #include <chrono>
 #include <iomanip>
+#include <iostream>
 
 namespace ch = std::chrono;
 
@@ -45,7 +46,7 @@ int main(int argc, char* argv[]) {
         {
             pool.enqueue([&total_matches, file, query]() {
                 total_matches += search_in_file(file, query);
-            })
+            });
         }
     }
     
