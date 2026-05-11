@@ -31,12 +31,12 @@ The executable is generated in the `build/` directory:
 ```bash
 ./build/searcher <directory_path> <search_query>
 ```
-### 📂 Project Structure
+### Project Structure
 *   `src/`: Source code (`.cpp` and `.hpp` files).
 *   `build/`: Target directory for the compiled binary (ignored by Git).
 *   `Makefile`: Build automation script.
 
-### 🧠 How it Works
+### How it Works
 *   **Discovery**: Uses `recursive_directory_iterator` to find all valid text files.
 *   **Task Queue**: Files are pushed as tasks into the **Thread Pool**.
 *   **Parallel Search**: Worker threads scan files simultaneously and update an **atomic counter**.
